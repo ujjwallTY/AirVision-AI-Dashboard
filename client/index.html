@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Air Quality Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🌍 AirVision
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">AQI</a></li>
+        <li><a href="#">Hotspots</a></li>
+        <li><a href="#">About</a></li>
+    </ul>
+
+</nav>
+
+<header class="hero">
+
+    <h1>AI Air Quality Dashboard</h1>
+
+    <p>Monitor Air Pollution Across India using Satellite Data</p>
+
+</header>
+
+<section class="search-box">
+
+    <input
+        type="text"
+        id="cityInput"
+        placeholder="Search City">
+
+    <button id="searchBtn">
+        Search
+    </button>
+
+</section>
+
+<section class="cards">
+
+    <div class="card">
+        <h2>City</h2>
+        <p id="cityName">--</p>
+    </div>
+
+    <div class="card">
+        <h2>Temperature</h2>
+        <p id="temperature">-- °C</p>
+    </div>
+
+    <div class="card">
+        <h2>Humidity</h2>
+        <p id="humidity">-- %</p>
+    </div>
+
+    <div class="card">
+        <h2>Weather</h2>
+        <p id="weather">--</p>
+    </div>
+
+    <div class="card">
+        <h2>Wind Speed</h2>
+        <p id="wind">-- m/s</p>
+    </div>
+
+</section>
+
+<section class="map-section">
+
+    <h2>India Air Quality Map</h2>
+
+    <div id="map"></div>
+
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/map.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
