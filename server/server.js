@@ -1,109 +1,204 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
-require("dotenv").config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+    
+    next();
+});
+const PORT = process.env.PORT || 3000;
+const API_KEY = process.env.OPENWEATHER_API_KEY;
 
+// ================================
 // Home Route
+// ================================
+
 app.get("/", (req, res) => {
-    res.send("🌍 Air Quality Dashboard Backend Running!");
+    res.send("🌍 AirVision Backend Running Successfully!");
 });
 
-// Health Check API
+// ================================
+// Health Check
+// ================================
+
 app.get("/api/status", (req, res) => {
     res.json({
         success: true,
-        message: "Backend Connected Successfully!",
-        version: "1.0.0"
+        project: "AirVision",
+        version: "1.0.0",
+        status: "Running"
     });
 });
 
+// ================================
 // Weather API
+// ================================
+
 app.get("/api/weather/:city", async (req, res) => {
+
     try {
+
         const city = req.params.city;
 
         const response = await axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`
+            `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
         );
 
         res.json(response.data);
 
     } catch (error) {
-        console.log("Weather API Error:");
-        console.log(error.response?.data || error.message);
 
-        res.status(500).json({
+        console.error(error.response?.data || error.message);
+
+        res.status(404).json({
             success: false,
-            message: "Unable to fetch weather data",
-            error: error.response?.data || error.message
+            message: "City not found"
         });
+
     }
+
 });
 
-const PORT = process.env.PORT || 3000;
+// ================================
+// Air Quality API
+// ================================
+
 app.get("/api/air/:city", async (req, res) => {
+
     try {
+
         const city = req.params.city;
 
-        // Get city coordinates
-        const weatherResponse = await axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.OPENWEATHER_API_KEY}`
+        const weather = await axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}`
         );
 
-        const { lat, lon } = weatherResponse.data.coord;
+        const { lat, lon } = weather.data.coord;
 
-        // Get Air Pollution Data
-        const airResponse = await axios.get(
-            `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.OPENWEATHER_API_KEY}`
+        const air = await axios.get(
+            `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
         );
 
-        res.json(airResponse.data);
+        res.json(air.data);
 
     } catch (error) {
-        console.log(error.response?.data || error.message);
 
-        res.status(500).json({
+        console.error(error.response?.data || error.message);
+
+        res.status(404).json({
             success: false,
-            message: "Unable to fetch AQI data"
+            message: "AQI data not available"
         });
+
     }
+
 });
+
+// ================================
+// Dashboard API
+// ================================
+
 app.get("/api/dashboard/:city", async (req, res) => {
+
     try {
+
         const city = req.params.city;
 
-        // Weather
-        const weatherResponse = await axios.get(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`
+        const weather = await axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
         );
 
-        const { lat, lon } = weatherResponse.data.coord;
+        const { lat, lon } = weather.data.coord;
 
-        // Air Quality
-        const airResponse = await axios.get(
-            `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.OPENWEATHER_API_KEY}`
+        const air = await axios.get(
+            `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
         );
 
         res.json({
-            city: weatherResponse.data.name,
-            weather: weatherResponse.data,
-            air: airResponse.data
+            city: weather.data.name,
+            weather: weather.data,
+            air: air.data
         });
 
     } catch (error) {
-        console.log(error.response?.data || error.message);
+
+        console.error(error.response?.data || error.message);
+
+        res.status(404).json({
+            success: false,
+            message: "Unable to load dashboard."
+        });
+
+    }
+
+});
+
+// ================================
+// Start Server
+// ================================
+
+app.get("/api/location/:lat/:lon", async (req, res) => {
+
+    try {
+
+        const { lat, lon } = req.params;
+
+        const weather = await axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+        );
+
+        const air = await axios.get(
+            `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+        );
+
+        res.json({
+            city: weather.data.name,
+            weather: weather.data,
+            air: air.data
+        });
+
+    } catch (error) {
+
+        console.error(error.response?.data || error.message);
 
         res.status(500).json({
             success: false,
-            message: "Unable to load dashboard"
+            message: "Unable to fetch your location."
         });
+
     }
+
+});
+app.get("/api/forecast/:city", async (req, res) => {
+
+    try {
+
+        const city = req.params.city;
+
+        const weather = await axios.get(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`
+        );
+
+        res.json(weather.data);
+
+    } catch (error) {
+
+        res.status(404).json({
+            success: false,
+            message: "Forecast unavailable"
+        });
+
+    }
+
 });
 app.listen(PORT, () => {
-    console.log(`✅ Server running at http://localhost:${PORT}`);
+
+  
+
 });

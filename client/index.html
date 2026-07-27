@@ -1,105 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Air Quality Dashboard</title>
 
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
 </head>
 
 <body>
 
-<nav class="navbar">
+    <nav class="navbar">
 
-    <div class="logo">
-        🌍 AirVision
+        <div class="logo">
+            🌍 AirVision
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">AQI</a></li>
+            <li><a href="#">Hotspots</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+
+    </nav>
+
+    <header class="hero">
+
+        <h1>🌍 AirVision Analytics Dashboard</h1>
+
+        <p>
+            Real-Time Weather • Air Quality • Interactive Maps • AI Health Insights
+        </p>
+
+    </header>
+
+    <section class="search-box">
+
+        <input
+            id="cityInput"
+            type="text"
+            placeholder="🔍 Search any city or state...">
+
+        <button id="searchBtn">
+            Search
+        </button>
+
+        <button id="locationBtn">
+            📍 My Location
+        </button>
+
+    </section>
+
+    <h2 style="text-align:center;margin-top:40px;color:#0D47A1;">
+        📊 Live Environmental Statistics
+    </h2>
+
+    <section class="dashboard">
+
+        <div class="card">
+            <h3>🌡 Temperature</h3>
+            <h2 id="temperature">-- °C</h2>
+        </div>
+
+        <div class="card">
+            <h3>💧 Humidity</h3>
+            <h2 id="humidity">-- %</h2>
+        </div>
+
+        <div class="card">
+            <h3>🌬 Wind Speed</h3>
+            <h2 id="wind">-- m/s</h2>
+        </div>
+
+        <div class="card" id="aqiCard">
+
+    <h3>🫁 Air Quality</h3>
+
+    <div class="gauge">
+
+        <div class="gauge-fill" id="gaugeFill">
+
+            <span id="aqi">--</span>
+
+        </div>
+
     </div>
-
-    <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">AQI</a></li>
-        <li><a href="#">Hotspots</a></li>
-        <li><a href="#">About</a></li>
-    </ul>
-
-</nav>
-
-<header class="hero">
-
-    <h1>AI Air Quality Dashboard</h1>
-
-    <p>Monitor Air Pollution Across India using Satellite Data</p>
-
-</header>
-
-<section class="search-box">
-
-    <input
-        type="text"
-        id="cityInput"
-        placeholder="Search City">
-
-    <button id="searchBtn">
-        Search
-    </button>
-
-</section>
-
-<section class="cards">
-
-    <div class="card">
-        <h2>City</h2>
-        <p id="cityName">--</p>
-    </div>
-
-    <div class="card">
-        <h2>Temperature</h2>
-        <p id="temperature">-- °C</p>
-    </div>
-
-    <div class="card">
-        <h2>Humidity</h2>
-        <p id="humidity">-- %</p>
-    </div>
-
-   <div class="card">
-    <h2>Weather</h2>
-
-    <img
-        id="weatherIcon"
-        width="70"
-        alt="Weather Icon">
-
-    <p id="weather">--</p>
 
 </div>
 
-    <div class="card">
-        <h2>Wind Speed</h2>
-        <p id="wind">-- m/s</p>
+        <div class="card">
+            <h3>☁ Weather</h3>
+            <img id="weatherIcon" width="70">
+            <h2 id="weather">--</h2>
+        </div>
+
+        <div class="card">
+            <h3>📍 City</h3>
+            <h2 id="cityName">--</h2>
+        </div>
+
+    </section>
+
+    <section class="card ai-card">
+
+        <h2>🤖 AI Health Recommendation</h2>
+
+        <p id="aiAdvice">
+            Search a city to get health recommendations.
+        </p>
+
+    </section>
+
+    <section class="map-section">
+
+        <h2>🗺️ Live Air Quality Map</h2>
+
+        <div id="map"></div>
+
+    </section>
+
+<section class="forecast-section">
+
+    <h2>🌤 5-Day Weather Forecast</h2>
+
+    <div id="forecastCards" class="forecast-container">
+
     </div>
-<div class="card" id="aqiCard">
-    <h2>Air Quality</h2>
-    <p id="aqi">--</p>
-</div>
-</section>
-
-<section class="map-section">
-
-    <h2>India Air Quality Map</h2>
-
-    <div id="map"></div>
 
 </section>
+    <section class="graphs">
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <div class="graph-card">
+            <h2>🌡 Temperature Trend</h2>
+            <canvas id="tempChart"></canvas>
+        </div>
 
-<script src="js/api.js"></script>
-<script src="js/ui.js"></script>
+        <div class="graph-card">
+            <h2>🌫 AQI Trend</h2>
+            <canvas id="aqiChart"></canvas>
+        </div>
+
+        <div class="graph-card">
+            <h2>🌤️ 5-Day Forecast</h2>
+            <canvas id="forecastChart"></canvas>
+        </div>
+
+    </section>
+
+    <section class="pollution-section">
+
+        <div class="pollution-card">
+            <h3>PM2.5</h3>
+            <p id="pm25">--</p>
+        </div>
+
+        <div class="pollution-card">
+            <h3>PM10</h3>
+            <p id="pm10">--</p>
+        </div>
+
+        <div class="pollution-card">
+            <h3>CO</h3>
+            <p id="co">--</p>
+        </div>
+
+        <div class="pollution-card">
+            <h3>NO₂</h3>
+            <p id="no2">--</p>
+        </div>
+
+        <div class="pollution-card">
+            <h3>SO₂</h3>
+            <p id="so2">--</p>
+        </div>
+
+        <div class="pollution-card">
+            <h3>O₃</h3>
+            <p id="o3">--</p>
+        </div>
+
+    </section>
+<section class="dashboard">
+
+    <div class="card">
+        <h3>🌅 Sunrise</h3>
+        <h2 id="sunrise">--</h2>
+    </div>
+
+    <div class="card">
+        <h3>🌇 Sunset</h3>
+        <h2 id="sunset">--</h2>
+    </div>
+
+    <div class="card">
+        <h3>👁 Visibility</h3>
+        <h2 id="visibility">--</h2>
+    </div>
+
+    <div class="card">
+        <h3>🌡 Feels Like</h3>
+        <h2 id="feelsLike">--</h2>
+    </div>
+
+</section>
+    <footer class="footer">
+
+        <p>
+            🌍 AirVision Dashboard • Powered by OpenWeather API • Built by Ujjawal
+        </p>
+
+    </footer>
+
+    <!-- Scripts -->
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="js/api.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/forecast.js"></script>
 <script src="js/map.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/app.js"></script>
 
 </body>
+
 </html>
