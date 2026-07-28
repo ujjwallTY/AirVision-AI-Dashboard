@@ -4,10 +4,6 @@ let aqiChart;
 const tempHistory = [];
 const aqiHistory = [];
 const labels = [];
-
-// ===========================
-// Update Charts
-// ===========================
 function updateCharts(temp, aqi, city) {
 
     if (labels.length >= 7) {
@@ -24,9 +20,6 @@ function updateCharts(temp, aqi, city) {
     drawAQIChart();
 }
 
-// ===========================
-// Temperature Chart
-// ===========================
 function drawTempChart() {
 
     const canvas = document.getElementById("tempChart");
@@ -128,9 +121,6 @@ function drawTempChart() {
 
 }
 
-// ===========================
-// AQI Chart
-// ===========================
 function drawAQIChart(){
 
     const canvas=document.getElementById("aqiChart");

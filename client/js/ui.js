@@ -1,3 +1,4 @@
+console.count("updateUI");
 let currentWeatherData = null;
 
 function updateUI(data) {

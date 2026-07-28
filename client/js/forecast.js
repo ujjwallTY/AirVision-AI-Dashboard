@@ -1,7 +1,6 @@
 let forecastChart;
 
 function drawForecastChart(data){
-
     const labels = [];
     const temps = [];
 
@@ -17,7 +16,6 @@ function drawForecastChart(data){
         );
 
     }
-
     const canvas = document.getElementById("forecastChart");
     const ctx = canvas.getContext("2d");
 

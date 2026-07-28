@@ -15,17 +15,11 @@ app.use((req, res, next) => {
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.OPENWEATHER_API_KEY;
 
-// ================================
-// Home Route
-// ================================
 
 app.get("/", (req, res) => {
     res.send("🌍 AirVision Backend Running Successfully!");
 });
 
-// ================================
-// Health Check
-// ================================
 
 app.get("/api/status", (req, res) => {
     res.json({
@@ -36,9 +30,6 @@ app.get("/api/status", (req, res) => {
     });
 });
 
-// ================================
-// Weather API
-// ================================
 
 app.get("/api/weather/:city", async (req, res) => {
 
@@ -65,9 +56,7 @@ app.get("/api/weather/:city", async (req, res) => {
 
 });
 
-// ================================
-// Air Quality API
-// ================================
+
 
 app.get("/api/air/:city", async (req, res) => {
 
@@ -100,9 +89,7 @@ app.get("/api/air/:city", async (req, res) => {
 
 });
 
-// ================================
-// Dashboard API
-// ================================
+
 
 app.get("/api/dashboard/:city", async (req, res) => {
 
@@ -139,9 +126,7 @@ app.get("/api/dashboard/:city", async (req, res) => {
 
 });
 
-// ================================
-// Start Server
-// ================================
+
 
 app.get("/api/location/:lat/:lon", async (req, res) => {
 
@@ -198,7 +183,5 @@ app.get("/api/forecast/:city", async (req, res) => {
 
 });
 app.listen(PORT, () => {
-
-  
-
+    console.log(`✅ Server running on http://localhost:${PORT}`);
 });

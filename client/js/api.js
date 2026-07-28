@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://airvision-ai-dashboard-1.onrender.com";
 
 const stateToCity = {
     "uttarakhand": "Dehradun",
@@ -30,8 +30,6 @@ const stateToCity = {
     "tamil nadu": "Chennai",
     "goa": "Panaji"
 };
-
-// Weather
 async function getWeather(city = "Delhi") {
 
     city = city.trim();
@@ -40,7 +38,7 @@ async function getWeather(city = "Delhi") {
 
     if (stateToCity[searchKey]) {
         city = stateToCity[searchKey];
-        console.log(`Searching for ${city} instead of ${searchKey}`);
+      
     }
 
     try {
@@ -66,10 +64,7 @@ async function getWeather(city = "Delhi") {
         alert(error.message);
 
     }
-
 }
-
-// Forecast
 async function getForecast(city) {
 
     const response = await fetch(

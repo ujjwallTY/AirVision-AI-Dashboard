@@ -1,10 +1,13 @@
 window.onload = () => {
-    getWeather("Delhi");
-};
 
+    getWeather("Delhi");
+    getForecast("Delhi").then(drawForecastChart);
+
+};
 const input = document.getElementById("cityInput");
 const button = document.getElementById("searchBtn");
 const locationBtn = document.getElementById("locationBtn");
+
 function searchCity() {
 
     const city = input.value.trim();
@@ -14,19 +17,20 @@ function searchCity() {
         input.focus();
         return;
     }
-
     getWeather(city);
+    getForecast(city).then(drawForecastChart);
 
     input.value = "";
     input.focus();
 }
-
 button.addEventListener("click", searchCity);
 
 input.addEventListener("keypress", (e) => {
+
     if (e.key === "Enter") {
         searchCity();
     }
+
 });
 locationBtn.addEventListener("click", () => {
 
@@ -34,8 +38,8 @@ locationBtn.addEventListener("click", () => {
         alert("Geolocation is not supported by this browser.");
         return;
     }
-
     navigator.geolocation.getCurrentPosition(
+
         async (position) => {
 
             const lat = position.coords.latitude;
@@ -51,10 +55,11 @@ locationBtn.addEventListener("click", () => {
 
                 updateUI(data);
 
+                getForecast(data.city).then(drawForecastChart);
+
             } catch (error) {
 
                 console.error(error);
-
                 alert("Unable to fetch your location.");
 
             }
@@ -62,7 +67,9 @@ locationBtn.addEventListener("click", () => {
         },
 
         () => {
+
             alert("Location permission denied.");
+
         }
 
     );
