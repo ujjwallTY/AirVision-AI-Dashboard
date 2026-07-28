@@ -1,75 +1,25 @@
-# 🌍 AirVision – AI Air Quality Dashboard
-
-A modern AI-powered environmental dashboard built using JavaScript, Node.js, Express, OpenWeather API, Chart.js and Leaflet.
-
----
+# 🌦️ AirVision AI Dashboard
 
 ## Features
-
-- 🌤 Live Weather
-- 🌫 Real-time Air Quality Index (AQI)
-- 🤖 AI Health Recommendation
-- 🗺 Interactive Map
-- 📈 Animated Temperature Trend
-- 📊 AQI Trend Chart
-- 🌦 5-Day Forecast
-- 🌅 Sunrise & Sunset
-- 👁 Visibility
-- 🌡 Feels Like Temperature
-- 🧪 Pollution Components
-- 📍 Current Location Detection
-- 🎨 Glassmorphism UI
-- 🌈 Dynamic Weather Themes
-
----
+✔ Live Weather
+✔ Air Quality Index (AQI)
+✔ 5-Day Forecast
+✔ Interactive Charts
+✔ Geolocation
+✔ AI Health Advice
+✔ Weather Map
+✔ Responsive UI
 
 ## Tech Stack
+- HTML
+- CSS
+- JavaScript
+- Node.js
+- Express.js
+- Chart.js
+- OpenWeather API
+- Render
+- Vercel
 
-HTML5
-
-CSS3
-
-JavaScript
-
-Node.js
-
-Express.js
-
-Chart.js
-
-Leaflet.js
-
-OpenWeather API
-
----
-
-## Screenshots
-
-(Add screenshots here)
-
----
-
-## Installation
-
-```bash
-npm install
-```
-
-Run
-
-```bash
-node server.js
-```
-
-Open
-
-```
-http://127.0.0.1:5500/client/
-```
-
----
-
-## Author
-
-**Ujjawal Tyagi**# AirVision-AI-Dashboard
-# AirVision-AI-Dashboard
+## Live Demo
+https://air-vision-ai-dashboard-10yrfhk2x-nova-8181.vercel.app
