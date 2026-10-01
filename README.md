@@ -1,4 +1,4 @@
-# 🌦️ AirVision AI Dashboard
+# AirVision AI Dashboard
 
 ## Features
 ✔ Live Weather
